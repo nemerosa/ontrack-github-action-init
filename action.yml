@@ -1,13 +1,8 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
-inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
-    required: true
-    default: '1000'
+name: 'ontrack-init'
+description: 'Checks the Ontrack configuration and exports some useful variables for other tasks to use.'
 outputs:
-  time: # output will be available to future steps
-    description: 'The message to output'
+  repository:
+    description: 'Name of the GitHub repository (without the organization or user)'
 runs:
   using: 'node12'
   main: 'dist/index.js'

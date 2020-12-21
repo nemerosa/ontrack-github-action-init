@@ -1,23 +1,28 @@
-const wait = require('./wait');
 const process = require('process');
-const cp = require('child_process');
-const path = require('path');
+const core = require('@actions/core');
+const init = require('./init');
 
-test('throws invalid number', async () => {
-  await expect(wait('foo')).rejects.toThrow('milliseconds not a number');
+test('missing URL', async () => {
+    await expect(init()).rejects.toThrow('ONTRACK_URL environment variable is expected.');
 });
 
-test('wait 500 ms', async () => {
-  const start = new Date();
-  await wait(500);
-  const end = new Date();
-  var delta = Math.abs(end - start);
-  expect(delta).toBeGreaterThanOrEqual(500);
+test('missing token', async () => {
+    process.env['ONTRACK_URL'] = 'http://localhost:8080';
+    await expect(init()).rejects.toThrow('ONTRACK_TOKEN environment variable is expected.');
 });
 
-// shows how the runner will run a javascript action with env / stdout protocol
-test('test runs', () => {
-  process.env['INPUT_MILLISECONDS'] = 500;
-  const ip = path.join(__dirname, 'index.js');
-  console.log(cp.execSync(`node ${ip}`, {env: process.env}).toString());
-})
+describe('Ontrack environment is set', () => {
+
+    beforeEach(() => {
+        process.env['ONTRACK_URL'] = 'http://localhost:8080';
+        process.env['ONTRACK_TOKEN'] = 'super-secret-token';
+    });
+
+    test('GitHub repository name', async () => {
+        process.env.GITHUB_REPOSITORY = 'nemerosa/ontrack';
+        await expect(init()).resolves.toEqual({
+            repository: 'ontrack'
+        });
+    });
+});
+
