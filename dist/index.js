@@ -8,11 +8,9 @@ require('./sourcemap-register.js');module.exports =
 const core = __webpack_require__(186);
 const init = __webpack_require__(803);
 
-try {
-    const environment = {};
+const environment = {};
 
-    const outputs = init(environment);
-
+init(environment).then((outputs) => {
     for (const property in outputs) {
         const value = outputs[property];
         core.debug(`Output ${property} ==> ${value}`)
@@ -23,9 +21,9 @@ try {
         core.debug(`Environment ${property} ==> ${value}`)
         core.exportVariable(property, value);
     }
-} catch (error) {
-    core.setFailed(error.message);
-}
+}).catch((err) => {
+    core.setFailed(err.message);
+});
 
 
 /***/ }),

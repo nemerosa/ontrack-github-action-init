@@ -1,11 +1,9 @@
 const core = require('@actions/core');
 const init = require('./init');
 
-try {
-    const environment = {};
+const environment = {};
 
-    const outputs = init(environment);
-
+init(environment).then((outputs) => {
     for (const property in outputs) {
         const value = outputs[property];
         core.debug(`Output ${property} ==> ${value}`)
@@ -16,6 +14,6 @@ try {
         core.debug(`Environment ${property} ==> ${value}`)
         core.exportVariable(property, value);
     }
-} catch (error) {
-    core.setFailed(error.message);
-}
+}).catch((err) => {
+    core.setFailed(err.message);
+});
