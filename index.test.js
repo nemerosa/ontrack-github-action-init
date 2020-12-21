@@ -1,5 +1,4 @@
 const process = require('process');
-const core = require('@actions/core');
 const init = require('./init');
 
 test('missing URL', async () => {
@@ -21,7 +20,9 @@ describe('Ontrack environment is set', () => {
     test('GitHub repository name', async () => {
         process.env.GITHUB_REPOSITORY = 'nemerosa/ontrack';
         const environment = {};
-        await expect(init(environment)).resolves.toEqual({});
+        await expect(init(environment)).resolves.toEqual({
+            repository: 'ontrack'
+        });
         expect(environment.ONTRACK_GITHUB_REPOSITORY).toEqual('ontrack');
     });
 });
