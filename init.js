@@ -7,14 +7,13 @@ let init = async function () {
     const githubRepo = process.env.GITHUB_REPOSITORY
     const index = githubRepo.indexOf('/')
     if (index > 0) {
-        return {
-            repository: githubRepo.substring(index + 1)
-        };
+        process.env.ONTRACK_GITHUB_REPOSITORY = githubRepo.substring(index + 1);
     } else {
-        return {
-            repository: githubRepo
-        };
+        process.env.ONTRACK_GITHUB_REPOSITORY = githubRepo;
     }
+
+    // No output
+    return {};
 }
 
 module.exports = init;

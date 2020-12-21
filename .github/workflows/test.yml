@@ -1,25 +1,27 @@
-name: "units-test"
+name: "build"
 on:
   pull_request:
   push:
     branches:
-      - main
-      - 'releases/*'
+      - '*'
+
+env:
+  ONTRACK_URL: ${{ secrets.ONTRACK_URL }}
+  ONTRACK_TOKEN: ${{ secrets.ONTRACK_TOKEN }}
 
 jobs:
   # unit tests
   units:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: npm ci
-    - run: npm test
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm test
 
-  # test action works running from the graph
+  # using this action for this project
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: ./
-      with:
-        milliseconds: 1000
+      - uses: actions/checkout@v2
+      - uses: ./
+      - run: echo ${ONTRACK_GITHUB_REPOSITORY}

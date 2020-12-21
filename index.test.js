@@ -20,9 +20,8 @@ describe('Ontrack environment is set', () => {
 
     test('GitHub repository name', async () => {
         process.env.GITHUB_REPOSITORY = 'nemerosa/ontrack';
-        await expect(init()).resolves.toEqual({
-            repository: 'ontrack'
-        });
+        await expect(init()).resolves.toEqual({});
+        expect(process.env.ONTRACK_GITHUB_REPOSITORY).toEqual('ontrack');
     });
 });
 
