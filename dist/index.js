@@ -6,29 +6,59 @@ require('./sourcemap-register.js');module.exports =
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 const core = __webpack_require__(186);
-const wait = __webpack_require__(258);
+const init = __webpack_require__(803);
 
+try {
+    const environment = {};
 
-// most @actions toolkit packages have async methods
-async function run() {
-  try {
+    const outputs = init(environment);
 
-    
-
-    const ms = core.getInput('milliseconds');
-    core.info(`Waiting ${ms} milliseconds ...`);
-
-    core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    await wait(parseInt(ms));
-    core.info((new Date()).toTimeString());
-
-    core.setOutput('time', new Date().toTimeString());
-  } catch (error) {
+    for (const property in outputs) {
+        const value = outputs[property];
+        core.debug(`Output ${property} ==> ${value}`)
+        core.setOutput(property, value);
+    }
+    for (const property in environment) {
+        const value = environment[property];
+        core.debug(`Environment ${property} ==> ${value}`)
+        core.exportVariable(property, value);
+    }
+} catch (error) {
     core.setFailed(error.message);
-  }
 }
 
-run();
+
+/***/ }),
+
+/***/ 803:
+/***/ ((module) => {
+
+let init = async function (environment) {
+    // Checks required environment variables
+    checkEnv('ONTRACK_URL')
+    checkEnv('ONTRACK_TOKEN')
+
+    // Ontrack-friendly outputs
+    const outputs = {};
+    const githubRepo = process.env.GITHUB_REPOSITORY
+    const index = githubRepo.indexOf('/')
+    if (index > 0) {
+        environment.ONTRACK_GITHUB_REPOSITORY = outputs.repository = githubRepo.substring(index + 1);
+    } else {
+        environment.ONTRACK_GITHUB_REPOSITORY = outputs.repository = githubRepo;
+    }
+
+    // No output
+    return outputs;
+}
+
+module.exports = init;
+
+function checkEnv(name) {
+    if (!process.env[name]) {
+        throw new Error(`${name} environment variable is expected.`)
+    }
+}
 
 
 /***/ }),
@@ -423,23 +453,6 @@ function toCommandValue(input) {
 }
 exports.toCommandValue = toCommandValue;
 //# sourceMappingURL=utils.js.map
-
-/***/ }),
-
-/***/ 258:
-/***/ ((module) => {
-
-let wait = function (milliseconds) {
-  return new Promise((resolve) => {
-    if (typeof milliseconds !== 'number') {
-      throw new Error('milliseconds not a number');
-    }
-    setTimeout(() => resolve("done!"), milliseconds)
-  });
-};
-
-module.exports = wait;
-
 
 /***/ }),
 
