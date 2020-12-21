@@ -1,9 +1,5 @@
 name: 'ontrack-init'
 description: 'Checks the Ontrack configuration and exports some useful variables for other tasks to use.'
-inputs:
-  logging:
-    description: If some information must be output
-    required: false
 outputs:
   repository:
     description: 'Name of the GitHub repository (without the organization or user)'
