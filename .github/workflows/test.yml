@@ -24,4 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
+        with:
+          logging: true
       - run: echo Ontrack GitHub repository = $ONTRACK_GITHUB_REPOSITORY
