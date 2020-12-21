@@ -1,4 +1,4 @@
-let init = async function () {
+let init = async function (environment) {
     // Checks required environment variables
     checkEnv('ONTRACK_URL')
     checkEnv('ONTRACK_TOKEN')
@@ -7,9 +7,9 @@ let init = async function () {
     const githubRepo = process.env.GITHUB_REPOSITORY
     const index = githubRepo.indexOf('/')
     if (index > 0) {
-        process.env.ONTRACK_GITHUB_REPOSITORY = githubRepo.substring(index + 1);
+        environment.ONTRACK_GITHUB_REPOSITORY = githubRepo.substring(index + 1);
     } else {
-        process.env.ONTRACK_GITHUB_REPOSITORY = githubRepo;
+        environment.ONTRACK_GITHUB_REPOSITORY = githubRepo;
     }
 
     // No output

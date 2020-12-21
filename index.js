@@ -2,9 +2,13 @@ const core = require('@actions/core');
 const init = require('./init');
 
 try {
-    const outputs = init();
+    const environment = {};
+    const outputs = init(environment);
     for (const property in outputs) {
         core.setOutput(property, outputs[property]);
+    }
+    for (const property in environment) {
+        core.exportVariable(property, environment[property]);
     }
 } catch (error) {
     core.setFailed(error.message);
