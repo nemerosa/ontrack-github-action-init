@@ -7,16 +7,19 @@ try {
 
     const outputs = init(environment);
 
-    if (logging) {
-        console.log("Output = ", outputs);
-        console.log("Environment = ", environment);
-    }
-
     for (const property in outputs) {
-        core.setOutput(property, outputs[property]);
+        const value = outputs[property];
+        if (logging) {
+            console.log(`Output ${property} ==> ${value}`)
+        }
+        core.setOutput(property, value);
     }
     for (const property in environment) {
-        core.exportVariable(property, environment[property]);
+        const value = environment[property];
+        if (logging) {
+            console.log(`Environment ${property} ==> ${value}`)
+        }
+        core.exportVariable(property, value);
     }
 } catch (error) {
     core.setFailed(error.message);

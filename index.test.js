@@ -2,12 +2,12 @@ const process = require('process');
 const init = require('./init');
 
 test('missing URL', async () => {
-    await expect(init()).rejects.toThrow('ONTRACK_URL environment variable is expected.');
+    await expect(init({})).rejects.toThrow('ONTRACK_URL environment variable is expected.');
 });
 
 test('missing token', async () => {
     process.env['ONTRACK_URL'] = 'http://localhost:8080';
-    await expect(init()).rejects.toThrow('ONTRACK_TOKEN environment variable is expected.');
+    await expect(init({})).rejects.toThrow('ONTRACK_TOKEN environment variable is expected.');
 });
 
 describe('Ontrack environment is set', () => {
