@@ -2,6 +2,30 @@
 
 <a href="https://github.com/actions/javascript-action/actions"><img alt="javascript-action status" src="https://github.com/actions/javascript-action/workflows/build/badge.svg"></a>
 
+This action makes sure the GitHub repository is ready to access Ontrack and sets up some
+outputs & environment variables for being used by other Ontrack GitHub actions.
+
+## Usage
+
+```yaml
+uses: nemerosa/ontrack-github-action-init@v1
+```
+
+## Prerequisites
+
+The following secrets must be set:
+
+* `ONTRACK_URL` - URL to the Ontrack instance to target
+* `ONTRACK_TOKEN` - authentication token to use
+
+Note that only Ontrack version 4 and above is supported.
+
+## Outputs
+
+| Output name | Environment variable | Description |
+|---|---|---|
+| `repository` | `ONTRACK_GITHUB_REPOSITORY` | Contains only the name of the GitHub repository, without the user or the organization. |
+
 ## Development
 
 Install the dependencies
@@ -51,20 +75,6 @@ git commit -a -m "v1 release"
 git push origin v1
 ```
 
-Note: We recommend using the `--license` option for ncc, which will create a license file for all of the production node modules used in your project.
-
 Your action is now published! :rocket:
 
 See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
-## Usage
-
-You can now consume the action by referencing the v1 branch
-
-```yaml
-uses: actions/javascript-action@v1
-with:
-  milliseconds: 1000
-```
-
-See the [actions tab](https://github.com/actions/javascript-action/actions) for runs of this action! :rocket:
