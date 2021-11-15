@@ -1,3 +1,5 @@
+⚠️ Obsolete action - please use nemerosa/ontrack-github-actions-cli-setup instead.
+
 # Ontrack Init action
 
 <a href="https://github.com/actions/javascript-action/actions"><img alt="javascript-action status" src="https://github.com/actions/javascript-action/workflows/build/badge.svg"></a>
