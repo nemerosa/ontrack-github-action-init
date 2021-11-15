@@ -1,4 +1,4 @@
-⚠️ Obsolete action - please use [nemerosa/ontrack-github-actions-cli-setup](nemerosa/ontrack-github-actions-cli-setup) instead.
+⚠️ Obsolete action - please use [nemerosa/ontrack-github-actions-cli-setup](https://github.com/nemerosa/ontrack-github-actions-cli-setup) instead.
 
 # Ontrack Init action
 
